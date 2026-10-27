@@ -1,0 +1,33 @@
+.ab-page { background: #f3f3f3; color: #14141a; min-height: 100vh; }
+.ab-page a { color: inherit; }
+.ab-stage { position: relative; min-height: 100svh; padding: 6.5rem 5% 3rem; display: flex; flex-direction: column; overflow: hidden; }
+.ab-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; direction: ltr; }
+.ab-headline { direction: rtl; text-align: right; font-weight: 900; font-size: clamp(2.8rem, 8vw, 7rem); line-height: 1.05; letter-spacing: -0.02em; }
+.ab-bottom { position: absolute; left: 5%; bottom: 1.5rem; font-weight: 900; font-size: clamp(2.6rem, 8vw, 7rem); line-height: 0.95; letter-spacing: -0.04em; color: #14141a; pointer-events: none; z-index: 1; }
+
+.ab-carousel { position: relative; z-index: 2; margin: 1rem 0 5rem; }
+.ab-view { position: relative; height: 420px; touch-action: pan-y; cursor: grab; outline-offset: 6px; user-select: none; }
+.ab-view.is-dragging { cursor: grabbing; }
+.ab-card { position: absolute; top: 10px; left: 50%; width: clamp(220px, 26vw, 300px); min-height: 360px; border-radius: 32px; padding: 1.4rem; display: flex; flex-direction: column; gap: 0.55rem; box-shadow: 0 24px 60px rgba(20, 20, 26, 0.16); transition: transform 0.55s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.4s; color: #14141a; }
+.ab-view.is-dragging .ab-card, .ab-view.no-motion .ab-card { transition: none; }
+.ab-card:not(.is-active) { cursor: pointer; }
+.ab-card-glyph { width: 76px; height: 76px; color: #14141a; margin-bottom: 0.4rem; }
+.ab-card-eyebrow { font-size: 0.8rem; font-weight: 700; opacity: 0.7; }
+.ab-card h2 { font-size: 1.6rem; font-weight: 900; line-height: 1.25; }
+.ab-card-text { font-size: 0.95rem; line-height: 1.8; }
+.ab-card-link { margin-top: auto; font-weight: 800; text-decoration: none; background: #14141a; color: #fff; padding: 0.5rem 1rem; border-radius: 999px; align-self: flex-start; }
+.ab-controls { display: flex; justify-content: center; align-items: center; gap: 1rem; margin-top: 1rem; font-weight: 700; }
+.ab-controls button { width: 44px; height: 44px; border-radius: 50%; border: 1px solid #cfcfcf; background: #fff; font-size: 1.2rem; }
+.ab-controls button:disabled { opacity: 0.35; cursor: default; }
+
+.ab-info { max-width: 760px; margin: 0 auto; padding: 3rem 5% 5rem; }
+.ab-info h2 { font-size: 1.8rem; font-weight: 900; margin-bottom: 1rem; }
+.ab-info ul { list-style: none; display: grid; gap: 0.5rem; margin-bottom: 1.5rem; }
+.ab-muted { color: #66666e; }
+.ab-cta { display: inline-block; background: #14141a; color: #fff !important; text-decoration: none; font-weight: 800; padding: 0.8rem 2rem; border-radius: 999px; }
+.ab-page :focus-visible { outline-color: #14141a; }
+
+@media (max-width: 700px) {
+  .ab-view { height: 400px; }
+  .ab-bottom { position: static; margin-top: 1rem; font-size: 3rem; }
+}
