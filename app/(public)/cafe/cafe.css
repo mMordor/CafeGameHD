@@ -1,19 +1,75 @@
-.cf-page { color: #1e2b37; }
-.cf-nav { position: sticky; top: 4.4rem; z-index: 150; display: flex; justify-content: center; gap: 0.4rem; padding: 0.5rem; margin: 0 auto; width: fit-content; max-width: calc(100% - 1rem); background: rgba(15, 15, 22, 0.72); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.18); border-radius: 999px; transform: translateY(5.4rem); margin-bottom: -2.6rem; overflow-x: auto; }
-.cf-nav a { color: rgba(255, 255, 255, 0.82); text-decoration: none; font-size: 0.85rem; font-weight: 700; padding: 0.4rem 1rem; border-radius: 999px; white-space: nowrap; }
-.cf-nav a.is-active { background: #fff; color: #14141a; }
+/* Café page: the home-page template styles (.home, .hero, .stage, .berry, .btn-primary ...) are reused.
+   This file only adds what is café-specific. Colors come from the active category's CSS variables. */
 
-.cf-section { padding: 0 5% 4rem; }
-.cf-hero { max-width: 1200px; margin: 0 auto; min-height: 82svh; padding-top: 7.5rem; display: grid; grid-template-columns: 1.1fr 0.9fr; align-items: center; gap: 2rem; }
-.cf-index { font-weight: 800; opacity: 0.6; }
-.cf-big { font-weight: 900; font-size: clamp(2.6rem, 7vw, 6.2rem); line-height: 0.98; letter-spacing: -0.03em; margin: 0.4rem 0 1rem; }
-.cf-title { font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 900; }
-.cf-tagline { margin-top: 0.4rem; font-size: 1.05rem; opacity: 0.8; }
-.cf-art-wrap { display: grid; place-items: center; }
-.cf-art { width: min(360px, 80%); height: auto; filter: drop-shadow(0 30px 40px rgba(0, 0, 0, 0.18)); transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1); }
-.cf-art-wrap:hover .cf-art { transform: scale(1.05) rotate(-3deg); }
+.cx { --gx: 50%; --gy: 30%; --sy: 0; }
+.cx .hero-side { padding-top: 0; }
+.cx .hero-center { translate: 0 calc(var(--sy) * -0.12px); will-change: translate; }
+.cx .stage-inner { animation: cxArtIn 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) backwards; transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1); }
+.cx[data-hot="1"] .stage-inner { transform: scale(1.06) rotate(-2deg); }
+@keyframes cxArtIn { from { opacity: 0; transform: scale(0.85); } to { opacity: 1; transform: none; } }
+.cx .cf-art { width: 100%; height: auto; display: block; }
 
-@keyframes cfFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
+/* cursor spotlight */
+.cx-glow { position: absolute; inset: 0; pointer-events: none; z-index: 1; background: radial-gradient(520px circle at var(--gx) var(--gy), color-mix(in srgb, var(--accent-2) 26%, transparent), transparent 62%); }
+
+/* headline */
+.cx-eyebrow { font-size: 1rem; font-weight: 800; letter-spacing: 0.04em; color: var(--accent-text); }
+.cx-big { font-weight: 900; font-size: clamp(2.6rem, 6vw, 5.6rem); line-height: 1.02; letter-spacing: -0.03em; color: var(--fg); text-transform: uppercase; overflow-wrap: anywhere; }
+.cx-ch { display: inline-block; animation: cxLetter 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both; animation-delay: calc(var(--i) * 32ms); }
+@keyframes cxLetter { from { opacity: 0; transform: translateY(0.5em) rotate(6deg); filter: blur(8px); } to { opacity: 1; transform: none; filter: blur(0); } }
+.cx-title { font-size: clamp(1.4rem, 2.6vw, 2.1rem); font-weight: 900; color: var(--fg); animation: enterUp 0.6s ease 0.2s both; }
+
+/* category cards (replace the flavor cards) */
+.cx-cats { display: flex; flex-direction: column; gap: 0.8rem; width: min(380px, 100%); }
+.cx-cat { display: flex; align-items: center; gap: 0.9rem; width: 100%; text-align: start; padding: 0.8rem 1rem; border-radius: 24px; background: var(--card-bg); border: 1px solid var(--panel-border); color: var(--fg); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275), border-color 0.3s, box-shadow 0.3s; }
+.cx-cat:hover { transform: translateX(6px) scale(1.02); }
+.cx-cat.is-active { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent), 0 14px 40px var(--glow); }
+.cx-cat-icon { flex: 0 0 52px; width: 52px; height: 52px; padding: 8px; border-radius: 16px; background: var(--accent); color: var(--accent-fg); transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); }
+.cx-cat-icon svg path, .cx-cat-icon svg rect, .cx-cat-icon svg ellipse, .cx-cat-icon svg circle { fill-opacity: 0.18; }
+.cx-cat:hover .cx-cat-icon, .cx-cat.is-active .cx-cat-icon { transform: rotate(-12deg) scale(1.1); }
+.cx-cat-text { display: flex; flex-direction: column; line-height: 1.4; }
+.cx-cat-text strong { font-size: 1.05rem; font-weight: 800; }
+.cx-cat-text small { font-size: 0.76rem; color: var(--fg-muted); }
+
+/* glass menu panel (reuses the specs-panel look) */
+.cx-panel { grid-column: 1 / -1; grid-row: 2; justify-self: center; width: min(1100px, 100%); z-index: 100; background: var(--panel-bg); border: 1px solid var(--panel-border); border-radius: 30px; padding: 1.4rem; backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); box-shadow: 0 18px 50px rgba(0, 0, 0, 0.12); color: var(--fg); scroll-margin-top: 5.5rem; }
+.cx-panel-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 1rem; margin-bottom: 1.1rem; }
+.cx-panel-head h2 { font-size: 1.6rem; font-weight: 900; line-height: 1.2; }
+.cx-panel-head p { color: var(--fg-muted); font-size: 0.9rem; }
+.cx-count { background: var(--accent); color: var(--accent-fg); font-weight: 800; font-size: 0.8rem; padding: 0.25rem 0.9rem; border-radius: 999px; }
+.cx-items { list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 0.8rem; }
+
+.cx-item { position: relative; overflow: hidden; height: 100%; min-height: 138px; display: flex; flex-direction: column; gap: 0.35rem; padding: 1rem 1.1rem; border-radius: 22px; background: var(--card-bg); border: 1px solid var(--panel-border); transform: perspective(700px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); transition: transform 0.25s ease-out, box-shadow 0.3s, border-color 0.3s; animation: cxItemIn 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) backwards; animation-delay: calc(var(--i) * 60ms); }
+.cx-item::before { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity 0.3s; background: radial-gradient(190px circle at var(--mx, 50%) var(--my, 50%), color-mix(in srgb, var(--accent) 30%, transparent), transparent 70%); }
+.cx-item:hover { border-color: var(--accent); box-shadow: 0 16px 40px var(--glow); }
+.cx-item:hover::before { opacity: 1; }
+@keyframes cxItemIn { from { opacity: 0; transform: translateY(24px) scale(0.96); } to { opacity: 1; } }
+.cx-item-no { font-weight: 800; font-size: 0.8rem; color: var(--fg-muted); }
+.cx-item h3 { position: relative; font-size: 1.15rem; font-weight: 800; }
+.cx-item-desc { position: relative; font-size: 0.86rem; color: var(--fg-muted); }
+.cx-item-price { position: relative; margin-top: auto; font-weight: 900; font-size: 1.05rem; color: var(--accent-text); font-variant-numeric: tabular-nums; }
+
+/* marquee ribbon */
+.cx-marquee { position: relative; z-index: 2; overflow: hidden; direction: ltr; border-block: 1px solid var(--panel-border); background: var(--panel-bg); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); padding: 0.9rem 0; margin-top: 2rem; }
+.cx-marquee-track { display: flex; width: max-content; animation: cxMarquee 32s linear infinite; }
+.cx-marquee span { display: flex; flex: none; }
+.cx-marquee b { direction: rtl; display: inline-flex; align-items: center; gap: 1.5rem; padding-inline: 1.5rem; font-size: clamp(1.4rem, 3vw, 2.2rem); font-weight: 900; color: transparent; -webkit-text-stroke: 1.5px var(--fg); white-space: nowrap; }
+.cx-marquee b i { width: 12px; height: 12px; border-radius: 50%; background: var(--accent); display: inline-block; }
+@keyframes cxMarquee { to { transform: translateX(-50%); } }
+.cx-marquee:hover .cx-marquee-track { animation-play-state: paused; }
+
+/* floating items (positions inside the hero grid; base look comes from .berry) */
+.cx-b1 { top: 16%; left: 30%; width: 76px; height: 76px; }
+.cx-b2 { top: 66%; left: 41%; width: 58px; height: 58px; }
+.cx-b3 { top: 24%; left: 63%; width: 90px; height: 90px; }
+.cx-b4 { top: 58%; left: 74%; width: 70px; height: 70px; }
+.cx-b5 { top: 8%; left: 46%; width: 54px; height: 54px; opacity: 0.7; }
+.cx-b6 { top: 46%; left: 56%; width: 48px; height: 48px; opacity: 0.6; }
+.cx-b7 { top: 72%; left: 22%; width: 60px; height: 60px; opacity: 0.7; }
+.cx-b8 { top: 12%; left: 82%; width: 52px; height: 52px; opacity: 0.6; }
+
+/* ---- illustration animation (CSS only) ---- */
+@keyframes cfFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
 @keyframes cfBob { 0%, 100% { transform: translateY(0) rotate(0); } 50% { transform: translateY(8px) rotate(6deg); } }
 @keyframes cfRise { 0% { transform: translateY(0); opacity: 0.8; } 100% { transform: translateY(-90px); opacity: 0; } }
 @keyframes cfSteam { 0% { transform: translateY(14px); opacity: 0; } 40% { opacity: 0.8; } 100% { transform: translateY(-20px); opacity: 0; } }
@@ -29,47 +85,20 @@
 .cf-steam3 { animation-delay: -2s; }
 .cf-spin { transform-box: fill-box; transform-origin: center; animation: cfSpin 40s linear infinite; }
 
-.cf-grid { list-style: none; max-width: 1200px; margin: 1rem auto 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1rem; }
-.cf-card { position: relative; height: 100%; border-radius: 26px; padding: 1.3rem 1.3rem 1.2rem; display: flex; flex-direction: column; gap: 0.5rem; min-height: 150px; transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.3s; }
-.cf-card:hover { transform: translateY(-6px); }
-.cf-card-no { font-weight: 800; font-size: 0.85rem; opacity: 0.55; }
-.cf-card h3 { font-size: 1.25rem; font-weight: 800; }
-.cf-desc { font-size: 0.9rem; opacity: 0.8; }
-.cf-price { margin-top: auto; font-weight: 800; font-size: 1.05rem; }
+.cx :focus-visible { outline-color: var(--fg); }
 
-.reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.6s ease var(--d, 0ms), transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) var(--d, 0ms); }
-.reveal.is-in { opacity: 1; transform: none; }
-
-/* --- Cold --- */
-.cf-cold { background: linear-gradient(180deg, #e6f6fb 0%, #f7feff 100%); color: #1e2b37; }
-.cf-cold .cf-big { color: #1e2b37; background: linear-gradient(90deg, #1e2b37, #2bb7b0); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
-.cf-cold .cf-card { background: #fff; border: 1px solid #cdeaf1; box-shadow: 0 10px 30px rgba(43, 183, 176, 0.1); }
-.cf-cold .cf-card:hover { box-shadow: 0 18px 40px rgba(43, 183, 176, 0.22); }
-.cf-cold .cf-price { color: #0f766e; }
-
-/* --- Hot --- */
-.cf-hot { background: linear-gradient(180deg, #f6ebdd 0%, #ecd9bf 100%); color: #2a170e; }
-.cf-hot .cf-big { color: #3b2418; }
-.cf-hot .cf-card { background: #fbf4ea; border: 1px solid #d9be9c; box-shadow: 0 10px 30px rgba(59, 36, 24, 0.1); }
-.cf-hot .cf-card:hover { box-shadow: 0 18px 40px rgba(59, 36, 24, 0.22); }
-.cf-hot .cf-price { color: #6b3f23; }
-
-/* --- Food --- */
-.cf-food { background: linear-gradient(180deg, #fbe3b8 0%, #f6c987 100%); color: #2b2b2e; }
-.cf-food .cf-big { color: #2b2b2e; }
-.cf-food .cf-big::first-line { color: #a8402b; }
-.cf-food .cf-card { background: #fff3da; border: 1px solid #e9b765; box-shadow: 0 10px 30px rgba(168, 64, 43, 0.12); }
-.cf-food .cf-card:hover { box-shadow: 0 18px 40px rgba(168, 64, 43, 0.25); }
-.cf-food .cf-price { color: #a8402b; }
-
-.cf-page :focus-visible { outline-color: #14141a; }
-@media (max-width: 800px) {
-  .cf-hero { grid-template-columns: 1fr; min-height: auto; padding-top: 6.5rem; }
-  .cf-art-wrap { order: -1; }
-  .cf-art { width: min(240px, 60%); }
+@media (max-width: 1100px) {
+  .cx .hero-center { translate: none; }
+  .cx-cats { margin-inline: auto; }
+  .cx-glow { display: none; }
 }
+@media (max-width: 640px) {
+  .cx-items { grid-template-columns: 1fr 1fr; }
+  .cx-panel { padding: 1rem; border-radius: 24px; }
+}
+@media (hover: none) { .cx-item { transform: none; } .cx-item::before { display: none; } }
 @media (prefers-reduced-motion: reduce) {
-  .cf-float, .cf-bob, .cf-rise, .cf-steam, .cf-spin { animation: none; }
-  .reveal { opacity: 1; transform: none; transition: none; }
-  .cf-card, .cf-art { transition: none; }
+  .cx-ch, .cx-title, .cx-item, .cx .stage-inner { animation: none; }
+  .cx-marquee-track, .cf-float, .cf-bob, .cf-rise, .cf-steam, .cf-spin { animation: none; }
+  .cx-item, .cx-cat, .cx-cat-icon, .cx .stage-inner { transition: none; }
 }
